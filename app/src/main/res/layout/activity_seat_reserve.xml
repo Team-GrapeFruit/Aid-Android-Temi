@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.SeatReserveActivity">
+
+    <!-- 로고 -->
+
+    <!-- 메인 -->
+    <TextView
+        android:id="@+id/main"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/btn_background"
+        android:fontFamily="@font/roboto_light"
+        android:gravity="center"
+        android:text="@string/main"
+        android:textColor="@color/white"
+        android:textSize="34sp"
+        app:layout_constraintStart_toStartOf="@id/main_guide_start"
+        app:layout_constraintEnd_toEndOf="@id/main_guide_end"
+        app:layout_constraintTop_toTopOf="@id/main_guide_top"
+        app:layout_constraintBottom_toBottomOf="@id/main_guide_bottom"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/main_guide_start"
+        android:layout_width="0.1dp"
+        android:layout_height="0.1dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.368"/>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/main_guide_end"
+        android:layout_width="0.1dp"
+        android:layout_height="0.1dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.4495"/>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/main_guide_top"
+        android:layout_width="0.1dp"
+        android:layout_height="0.1dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.084"/>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/main_guide_bottom"
+        android:layout_width="0.1dp"
+        android:layout_height="0.1dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.145"/>
+
+    <!-- 메뉴확인 -->
+    <TextView
+        android:id="@+id/menu_text"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fontFamily="@font/roboto_light"
+        android:gravity="center"
+        android:text="@string/menuCheck"
+        android:textColor="@color/black"
+        android:textSize="34sp"
+        app:layout_constraintStart_toStartOf="@id/menu_text_guide_start"
+        app:layout_constraintEnd_toEndOf="@id/menu_text_guide_end"
+        app:layout_constraintTop_toTopOf="@id/menu_text_guide_top"
+        app:layout_constraintBottom_toBottomOf="@id/menu_text_guide_bottom"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/menu_text_guide_start"
+        android:layout_width="0.1dp"
+        android:layout_height="0.1dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5435"/>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/menu_text_guide_end"
+        android:layout_width="0.1dp"
+        android:layout_height="0.1dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.61"/>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/menu_text_guide_top"
+        android:layout_width="0.1dp"
+        android:layout_height="0.1dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.0915"/>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/menu_text_guide_bottom"
+        android:layout_width="0.1dp"
+        android:layout_height="0.1dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.14"/>
+
+    <!-- 자리 예약 -->
+    <RelativeLayout
+        android:id="@+id/table"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/use_text"
+        app:layout_constraintTop_toBottomOf="@id/main">
+    </RelativeLayout>
+
+    <!-- 사용중 표시 -->
+    <ImageView
+        android:id="@+id/use_image"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:background="@drawable/use_background"
+        app:layout_constraintStart_toStartOf="@id/use_image_guide_start"
+        app:layout_constraintEnd_toEndOf="@id/use_image_guide_end"
+        app:layout_constraintTop_toTopOf="@id/use_image_guide_top"
+        app:layout_constraintBottom_toBottomOf="@id/use_image_guide_bottom"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/use_image_guide_start"
+        android:layout_width="0.1dp"
+        android:layout_height="0.1dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.445"/>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/use_image_guide_end"
+        android:layout_width="0.1dp"
+        android:layout_height="0.1dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.458"/>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/use_image_guide_top"
+        android:layout_width="0.1dp"
+        android:layout_height="0.1dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.885"/>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/use_image_guide_bottom"
+        android:layout_width="0.1dp"
+        android:layout_height="0.1dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.908"/>
+
+    <TextView
+        android:id="@+id/use_text"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fontFamily="@font/roboto_light"
+        android:gravity="center"
+        android:text="@string/use"
+        android:textColor="@color/black"
+        android:textSize="23sp"
+        app:layout_constraintStart_toStartOf="@id/use_text_guide_start"
+        app:layout_constraintEnd_toEndOf="@id/use_text_guide_end"
+        app:layout_constraintTop_toTopOf="@id/use_text_guide_top"
+        app:layout_constraintBottom_toBottomOf="@id/use_text_guide_bottom"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/use_text_guide_start"
+        android:layout_width="0.1dp"
+        android:layout_height="0.1dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.4615"/>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/use_text_guide_end"
+        android:layout_width="0.1dp"
+        android:layout_height="0.1dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.4955"/>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/use_text_guide_top"
+        android:layout_width="0.1dp"
+        android:layout_height="0.1dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8815"/>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/use_text_guide_bottom"
+        android:layout_width="0.1dp"
+        android:layout_height="0.1dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.909"/>
+
+    <!-- 빈자리 표시 -->
+    <ImageView
+        android:id="@+id/empty_image"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/empty_background"
+        app:layout_constraintStart_toStartOf="@id/empty_image_guide_start"
+        app:layout_constraintEnd_toEndOf="@id/empty_image_guide_end"
+        app:layout_constraintTop_toTopOf="@id/empty_image_guide_top"
+        app:layout_constraintBottom_toBottomOf="@id/empty_image_guide_bottom" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/empty_image_guide_start"
+        android:layout_width="0.1dp"
+        android:layout_height="0.1dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.506"/>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/empty_image_guide_end"
+        android:layout_width="0.1dp"
+        android:layout_height="0.1dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.519"/>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/empty_image_guide_top"
+        android:layout_width="0.1dp"
+        android:layout_height="0.1dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.885"/>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/empty_image_guide_bottom"
+        android:layout_width="0.1dp"
+        android:layout_height="0.1dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.908"/>
+
+    <TextView
+        android:id="@+id/empty_text"
+        android:layout_width="65dp"
+        android:layout_height="30dp"
+        android:fontFamily="@font/roboto_light"
+        android:gravity="center"
+        android:text="@string/empty"
+        android:textColor="@color/black"
+        android:textSize="23sp"
+        app:layout_constraintStart_toStartOf="@id/empty_text_guide_start"
+        app:layout_constraintEnd_toEndOf="@id/empty_text_guide_end"
+        app:layout_constraintTop_toTopOf="@id/empty_text_guide_top"
+        app:layout_constraintBottom_toBottomOf="@id/empty_text_guide_bottom"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/empty_text_guide_start"
+        android:layout_width="0.1dp"
+        android:layout_height="0.1dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5225"/>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/empty_text_guide_end"
+        android:layout_width="0.1dp"
+        android:layout_height="0.1dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.556"/>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/empty_text_guide_top"
+        android:layout_width="0.1dp"
+        android:layout_height="0.1dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8815"/>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/empty_text_guide_bottom"
+        android:layout_width="0.1dp"
+        android:layout_height="0.1dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.909"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
