@@ -8,7 +8,6 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.grapefruit.aid_android_temi.databinding.DialogSeatReserveBinding
-import com.grapefruit.aid_android_temi.model.retrofit.CommunicationWork
 import com.grapefruit.aid_android_temi.viewmodel.SeatReserveViewModel
 
 class SeatReserveDialog(private val context : SeatReserveActivity): DialogFragment() {

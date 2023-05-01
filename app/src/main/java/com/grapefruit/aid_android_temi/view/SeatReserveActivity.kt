@@ -13,7 +13,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.grapefruit.aid_android_temi.R
 import com.grapefruit.aid_android_temi.databinding.ActivitySeatReserveBinding
-import com.grapefruit.aid_android_temi.model.retrofit.CommunicationWork
 import com.grapefruit.aid_android_temi.viewmodel.SeatReserveViewModel
 
 class SeatReserveActivity : AppCompatActivity() {
