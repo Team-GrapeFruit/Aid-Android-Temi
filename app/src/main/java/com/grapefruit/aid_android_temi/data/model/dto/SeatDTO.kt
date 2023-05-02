@@ -1,4 +1,4 @@
-package com.grapefruit.aid_android_temi.model.dto
+package com.grapefruit.aid_android_temi.data.model.dto
 
 data class SeatDTO(
     val seatId: Long,
@@ -8,3 +8,8 @@ data class SeatDTO(
     val locationX: Float,
     val locationY: Float
 )
+
+data class CheckSeatDTO(
+    val singleSeatResponse: List<SeatDTO>
+)
+

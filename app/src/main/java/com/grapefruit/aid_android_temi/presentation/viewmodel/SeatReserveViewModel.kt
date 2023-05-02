@@ -1,27 +1,28 @@
-package com.grapefruit.aid_android_temi.viewmodel
+package com.grapefruit.aid_android_temi.presentation.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.grapefruit.aid_android_temi.model.dto.PurchaseDTO
-import com.grapefruit.aid_android_temi.model.dto.SeatDTO
-import com.grapefruit.aid_android_temi.model.retrofit.RetrofitBuilder
-import com.grapefruit.aid_android_temi.view.SeatReserveActivity
+import com.grapefruit.aid_android_temi.data.model.dto.CheckSeatDTO
+import com.grapefruit.aid_android_temi.data.model.dto.PurchaseDTO
+import com.grapefruit.aid_android_temi.data.model.dto.SeatDTO
+import com.grapefruit.aid_android_temi.data.model.retrofit.RetrofitBuilder
+import com.grapefruit.aid_android_temi.presentation.view.SeatReserveActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class SeatReserveViewModel: ViewModel() {
 
-    private val _seatListResponse = MutableLiveData<List<SeatDTO>>()
-    val seatListResponse: LiveData<List<SeatDTO>> get() = _seatListResponse
+    private val _seatListResponse = MutableLiveData<CheckSeatDTO>()
+    val seatListResponse: LiveData<CheckSeatDTO> get() = _seatListResponse
 
     private val _menuListResponse = MutableLiveData<List<PurchaseDTO>>()
     val menuListResponse: LiveData<List<PurchaseDTO>> get() = _menuListResponse
 
-    fun seatListResponse(seatList: List<SeatDTO>){
+    fun seatListResponse(seatList: CheckSeatDTO){
         _seatListResponse.value = seatList
     }
 
@@ -33,10 +34,10 @@ class SeatReserveViewModel: ViewModel() {
 
     fun seatList(storeId: Long, activity: SeatReserveActivity) {
         seatService.seatList(storeId)
-            .enqueue(object : Callback<List<SeatDTO>> {
+            .enqueue(object : Callback<CheckSeatDTO> {
                 override fun onResponse(
-                    call: Call<List<SeatDTO>>,
-                    response: Response<List<SeatDTO>>
+                    call: Call<CheckSeatDTO>,
+                    response: Response<CheckSeatDTO>
                 ) {
                     if (response.isSuccessful){
                         val seatList = response.body()
@@ -49,7 +50,7 @@ class SeatReserveViewModel: ViewModel() {
                     }
                 }
 
-                override fun onFailure(call: Call<List<SeatDTO>>, t: Throwable) {
+                override fun onFailure(call: Call<CheckSeatDTO>, t: Throwable) {
                     Log.d("통신 실패",t.message.toString())
                 }
             })
@@ -74,7 +75,7 @@ class SeatReserveViewModel: ViewModel() {
                 }
 
                 override fun onFailure(call: Call<List<PurchaseDTO>>, t: Throwable) {
-                    TODO("Not yet implemented")
+                    Log.d("통신 실패",t.message.toString())
                 }
             })
     }

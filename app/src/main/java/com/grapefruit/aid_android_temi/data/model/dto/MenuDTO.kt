@@ -1,4 +1,4 @@
-package com.grapefruit.aid_android_temi.model.dto
+package com.grapefruit.aid_android_temi.data.model.dto
 
 data class MenuDTO(
     val menuId: Long,

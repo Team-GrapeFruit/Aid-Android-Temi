@@ -1,6 +1,6 @@
-package com.grapefruit.aid_android_temi.model.retrofit
+package com.grapefruit.aid_android_temi.data.model.retrofit
 
-import com.grapefruit.aid_android_temi.model.service.SeatService
+import com.grapefruit.aid_android_temi.data.model.service.SeatService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

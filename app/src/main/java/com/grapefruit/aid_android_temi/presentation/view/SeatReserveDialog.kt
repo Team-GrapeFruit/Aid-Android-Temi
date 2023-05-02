@@ -1,6 +1,8 @@
-package com.grapefruit.aid_android_temi.view
+package com.grapefruit.aid_android_temi.presentation.view
 
 import android.app.Dialog
+import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.Window
@@ -8,15 +10,15 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.grapefruit.aid_android_temi.databinding.DialogSeatReserveBinding
-import com.grapefruit.aid_android_temi.viewmodel.SeatReserveViewModel
+import com.grapefruit.aid_android_temi.presentation.viewmodel.SeatReserveViewModel
 
-class SeatReserveDialog(private val context : SeatReserveActivity): DialogFragment() {
+class SeatReserveDialog(private val context: SeatReserveActivity) : DialogFragment() {
 
     lateinit var binding: DialogSeatReserveBinding
     lateinit var viewModel: SeatReserveViewModel
     private val dlg = Dialog(context)
 
-    fun show(seatNum: Long, seatId: Long){
+    fun show(seatNum: Long, seatId: Long) {
 
         viewModel =
             ViewModelProvider(context)[SeatReserveViewModel::class.java]
@@ -31,14 +33,17 @@ class SeatReserveDialog(private val context : SeatReserveActivity): DialogFragme
         dlg.setContentView(binding.root)     // 다이얼로그에 사용할 xml 파일을 불러옴
         dlg.setCancelable(true)    // 다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히도록
 
-        with(binding){
+
+        with(binding) {
             number.text = "" + seatNum + "번"
             cancelBtn.setOnClickListener {
                 dlg.dismiss()
             }
 
             nextBtn.setOnClickListener {
-
+                val intent = Intent(context, MoveActivity::class.java)
+                intent.putExtra("seatNum", seatNum)
+                context.startActivity(intent)
             }
         }
 
@@ -51,7 +56,6 @@ class SeatReserveDialog(private val context : SeatReserveActivity): DialogFragme
                 Glide.with(context)
             )
         }
-
         dlg.show()
     }
 }
