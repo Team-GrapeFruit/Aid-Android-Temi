@@ -2,16 +2,16 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".view.SeatReserveActivity">
+    tools:context=".presentation.view.SeatReserveActivity">
 
     <data>
         <variable
             name="activity"
-            type="com.grapefruit.aid_android_temi.view.SeatReserveActivity" />
+            type="com.grapefruit.aid_android_temi.presentation.view.SeatReserveActivity" />
 
         <variable
             name="viewModel"
-            type="com.grapefruit.aid_android_temi.viewmodel.SeatReserveViewModel" />
+            type="com.grapefruit.aid_android_temi.presentation.viewmodel.SeatReserveViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,7 +1,8 @@
-package com.grapefruit.aid_android_temi
+package com.grapefruit.aid_android_temi.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.grapefruit.aid_android_temi.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

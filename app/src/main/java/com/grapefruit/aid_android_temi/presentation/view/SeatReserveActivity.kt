@@ -1,4 +1,4 @@
-package com.grapefruit.aid_android_temi.view
+package com.grapefruit.aid_android_temi.presentation.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -13,7 +13,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.grapefruit.aid_android_temi.R
 import com.grapefruit.aid_android_temi.databinding.ActivitySeatReserveBinding
-import com.grapefruit.aid_android_temi.viewmodel.SeatReserveViewModel
+import com.grapefruit.aid_android_temi.presentation.viewmodel.SeatReserveViewModel
 
 class SeatReserveActivity : AppCompatActivity() {
 
@@ -24,17 +24,17 @@ class SeatReserveActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_reserve)
+        binding.activity = this
+
         viewModel =
             ViewModelProvider(this)[SeatReserveViewModel::class.java]
 
         viewModel.seatList(storeId, this)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_reserve)
-        binding.activity = this
-
         viewModel.seatListResponse.observe(this) {
             with(binding) {
-                for (i in 0..it.lastIndex) {
+                for (i in 0..it.singleSeatResponse.lastIndex) {
                     table.addView(createTable(i))
                 }
             }
@@ -49,7 +49,7 @@ class SeatReserveActivity : AppCompatActivity() {
 
     private fun createTable(index: Int): View {
         val table = TextView(this)
-        val seatList = viewModel.seatListResponse.value?.get(index)!!
+        val seatList = viewModel.seatListResponse.value?.singleSeatResponse?.get(index)!!
         table.width = widthSize(seatList.customerNum)
         table.height = heightSize(seatList.customerNum)
         table.x = seatList.locationX

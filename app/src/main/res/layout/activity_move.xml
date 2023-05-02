@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".presentation.view.MoveActivity">
+
+    <data>
+        <variable
+            name="activity"
+            type="com.grapefruit.aid_android_temi.presentation.view.MoveActivity" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- 테미 이미지 -->
+        <ImageView
+            android:id="@+id/temi_img"
+            android:layout_width="186dp"
+            android:layout_height="430dp"
+            android:layout_marginStart="600dp"
+            android:layout_marginTop="430dp"
+            android:src="@drawable/temi"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- 자리 이동 텍스트 -->
+        <TextView
+            android:id="@+id/temi_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1번 자리로 이동중 잠시 비켜주세요!"
+            android:textSize="40sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/roboto_light"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="930dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
