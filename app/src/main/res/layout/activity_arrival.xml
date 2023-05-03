@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".presentation.view.ArrivalActivity">
+
+    <data>
+        <variable
+            name="activity"
+            type="com.grapefruit.aid_android_temi.presentation.view.ArrivalActivity" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- 도착 완료 텍스트 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/arrival"
+            android:textSize="55sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:fontFamily="@font/roboto_light"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="150dp"/>
+
+        <!-- 음식 텍스트 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/food"
+            android:textSize="30sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/roboto_light"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="300dp"/>
+
+        <!-- 테미 이미지 -->
+        <ImageView
+            android:id="@+id/temi_img"
+            android:layout_width="186dp"
+            android:layout_height="430dp"
+            android:layout_marginTop="430dp"
+            android:src="@drawable/temi"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- 이동하기 버튼 -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/temi_text"
+            android:layout_width="800dp"
+            android:layout_height="75dp"
+            android:text="@string/next"
+            android:textSize="36sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:fontFamily="@font/roboto_light"
+            android:background="@drawable/btn_background"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="930dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
