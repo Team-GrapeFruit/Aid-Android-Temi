@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".feature_qrcode_scan.presentation.QrScanActivity">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <SurfaceView
+            android:id="@+id/surface_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        
+        <View
+            android:id="@+id/qr_left_top_sero"
+            android:layout_width="8dp"
+            android:layout_height="80dp"
+            android:background="@drawable/qrcode_scan_round"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="840dp"
+            android:layout_marginTop="440dp"/>
+
+        <View
+            android:id="@+id/qr_left_top_garo"
+            android:layout_width="80dp"
+            android:layout_height="8dp"
+            android:background="@drawable/qrcode_scan_round"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="840dp"
+            android:layout_marginTop="440dp"/>
+
+        <View
+            android:id="@+id/qr_left_bottom_sero"
+            android:layout_width="8dp"
+            android:layout_height="80dp"
+            android:background="@drawable/qrcode_scan_round"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="840dp"
+            android:layout_marginTop="600dp"/>
+
+        <View
+            android:id="@+id/qr_left_bottom_garo"
+            android:layout_width="80dp"
+            android:layout_height="8dp"
+            android:background="@drawable/qrcode_scan_round"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="840dp"
+            android:layout_marginTop="672dp"/>
+
+        <View
+            android:id="@+id/qr_right_top_sero"
+            android:layout_width="8dp"
+            android:layout_height="80dp"
+            android:background="@drawable/qrcode_scan_round"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="1072dp"
+            android:layout_marginTop="440dp"/>
+
+        <View
+            android:id="@+id/qr_right_top_garo"
+            android:layout_width="80dp"
+            android:layout_height="8dp"
+            android:background="@drawable/qrcode_scan_round"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="1000dp"
+            android:layout_marginTop="440dp"/>
+
+        <View
+            android:id="@+id/qr_right_bottom_sero"
+            android:layout_width="8dp"
+            android:layout_height="80dp"
+            android:background="@drawable/qrcode_scan_round"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="1072dp"
+            android:layout_marginTop="600dp"/>
+
+        <View
+            android:id="@+id/qr_right_bottom_garo"
+            android:layout_width="80dp"
+            android:layout_height="8dp"
+            android:background="@drawable/qrcode_scan_round"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="1000dp"
+            android:layout_marginTop="672dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="QR코드 등록하기"
+            android:textSize="30sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/roboto_light"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="706dp"/>
+        
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="800dp"
+            android:layout_height="84dp"
+            android:text="등록하기"
+            android:textSize="30sp"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:background="@drawable/btn_background"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="900dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
