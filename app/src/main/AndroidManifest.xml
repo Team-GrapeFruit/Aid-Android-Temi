@@ -18,13 +18,7 @@
         android:theme="@style/Theme.AidAndroidTemi"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.view.ArrivalActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.view.MoveActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.view.SeatReserveActivity"
+            android:name=".presentation.view.QrScanActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,10 +27,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentation.MainActivity"
+            android:name=".presentation.view.ArrivalActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.view.MoveActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.view.SeatReserveActivity"
             android:exported="true">
-
         </activity>
+        <activity
+            android:name=".presentation.MainActivity"
+            android:exported="true" />
     </application>
 
 </manifest>
