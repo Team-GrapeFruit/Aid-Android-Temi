@@ -7,4 +7,7 @@
     <string name="empty">빈자리</string>
     <string name="number">0번</string>
     <string name="next">이동하기</string>
+    <string name="arrival">도착 완료!</string>
+    <string name="food">음식을 받으신 후에 이동하기 버튼을 눌러주세요!</string>
+
 </resources>

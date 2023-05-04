@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.grapefruit.aid_android_temi.data.model.dto.CheckSeatDTO
 import com.grapefruit.aid_android_temi.data.model.dto.PurchaseDTO
-import com.grapefruit.aid_android_temi.data.model.dto.SeatDTO
 import com.grapefruit.aid_android_temi.data.model.retrofit.RetrofitBuilder
 import com.grapefruit.aid_android_temi.presentation.view.SeatReserveActivity
 import retrofit2.Call
