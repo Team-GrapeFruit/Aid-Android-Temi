@@ -19,7 +19,7 @@ class SeatReserveActivity : AppCompatActivity() {
 
     lateinit var binding: ActivitySeatReserveBinding
     lateinit var viewModel: SeatReserveViewModel
-    val storeId = 1L
+    var storeId: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +30,7 @@ class SeatReserveActivity : AppCompatActivity() {
         viewModel =
             ViewModelProvider(this)[SeatReserveViewModel::class.java]
 
+        storeId = intent.getLongExtra("storeId", 0)
         viewModel.seatList(storeId, this)
 
         viewModel.seatListResponse.observe(this) {
@@ -62,7 +63,7 @@ class SeatReserveActivity : AppCompatActivity() {
             )
         )
         table.gravity = Gravity.CENTER
-        table.textSize = 36F
+        table.textSize = 24F
         table.typeface = ResourcesCompat.getFont(this, R.font.roboto_light)
         table.setBackgroundResource(background(seatList.enabled))
         table.id = ViewCompat.generateViewId()
@@ -74,17 +75,17 @@ class SeatReserveActivity : AppCompatActivity() {
     }
 
     private fun widthSize(customerNum: Long): Int {
-        return if (customerNum == 1L) 190
-        else 400
+        return if (customerNum == 1L) 98
+        else 200
     }
 
     private fun heightSize(customerNum: Long): Int {
         return when (customerNum) {
-            1L -> 190
-            2L -> 190
-            4L -> 400
-            6L -> 600
-            8L -> 800
+            1L -> 98
+            2L -> 98
+            4L -> 200
+            6L -> 400
+            8L -> 600
             else -> 0
         }
     }

@@ -1,6 +1,9 @@
 package com.grapefruit.aid_android_temi.data.model.retrofit
 
+import com.grapefruit.aid_android_temi.data.model.dto.StoreDTO
+import com.grapefruit.aid_android_temi.data.model.service.QRService
 import com.grapefruit.aid_android_temi.data.model.service.SeatService
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -14,7 +17,15 @@ object RetrofitBuilder {
             .build()
     }
 
+    val service: QRService by lazy {
+        retrofit.create(QRService::class.java)
+    }
+
     val seatService: SeatService by lazy {
         retrofit.create(SeatService::class.java)
+    }
+
+    suspend fun searchStore(storeId: Long): Response<StoreDTO> {
+        return service.searchStore(storeId)
     }
 }
