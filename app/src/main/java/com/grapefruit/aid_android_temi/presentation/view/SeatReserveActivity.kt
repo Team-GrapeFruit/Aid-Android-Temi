@@ -19,7 +19,7 @@ class SeatReserveActivity : AppCompatActivity() {
 
     lateinit var binding: ActivitySeatReserveBinding
     lateinit var viewModel: SeatReserveViewModel
-    val storeId = 1L
+    var storeId: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +30,7 @@ class SeatReserveActivity : AppCompatActivity() {
         viewModel =
             ViewModelProvider(this)[SeatReserveViewModel::class.java]
 
+        storeId = intent.getLongExtra("storeId", 0)
         viewModel.seatList(storeId, this)
 
         viewModel.seatListResponse.observe(this) {

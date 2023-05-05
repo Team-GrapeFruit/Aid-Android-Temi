@@ -110,6 +110,7 @@
             android:layout_marginTop="706dp"/>
         
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/qr_btn"
             android:layout_width="800dp"
             android:layout_height="84dp"
             android:text="등록하기"
