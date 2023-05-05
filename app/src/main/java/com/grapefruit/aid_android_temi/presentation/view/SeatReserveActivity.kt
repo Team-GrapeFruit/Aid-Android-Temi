@@ -63,7 +63,7 @@ class SeatReserveActivity : AppCompatActivity() {
             )
         )
         table.gravity = Gravity.CENTER
-        table.textSize = 36F
+        table.textSize = 24F
         table.typeface = ResourcesCompat.getFont(this, R.font.roboto_light)
         table.setBackgroundResource(background(seatList.enabled))
         table.id = ViewCompat.generateViewId()
@@ -75,17 +75,17 @@ class SeatReserveActivity : AppCompatActivity() {
     }
 
     private fun widthSize(customerNum: Long): Int {
-        return if (customerNum == 1L) 190
-        else 400
+        return if (customerNum == 1L) 98
+        else 200
     }
 
     private fun heightSize(customerNum: Long): Int {
         return when (customerNum) {
-            1L -> 190
-            2L -> 190
-            4L -> 400
-            6L -> 600
-            8L -> 800
+            1L -> 98
+            2L -> 98
+            4L -> 200
+            6L -> 400
+            8L -> 600
             else -> 0
         }
     }

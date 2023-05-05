@@ -19,109 +19,109 @@
         
         <View
             android:id="@+id/qr_left_top_sero"
-            android:layout_width="8dp"
-            android:layout_height="80dp"
+            android:layout_width="5.3dp"
+            android:layout_height="53dp"
             android:background="@drawable/qrcode_scan_round"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginStart="840dp"
-            android:layout_marginTop="440dp"/>
+            android:layout_marginStart="560dp"
+            android:layout_marginTop="295dp"/>
 
         <View
             android:id="@+id/qr_left_top_garo"
-            android:layout_width="80dp"
-            android:layout_height="8dp"
+            android:layout_width="53dp"
+            android:layout_height="5.3dp"
             android:background="@drawable/qrcode_scan_round"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginStart="840dp"
-            android:layout_marginTop="440dp"/>
+            android:layout_marginStart="560dp"
+            android:layout_marginTop="295dp"/>
 
         <View
             android:id="@+id/qr_left_bottom_sero"
-            android:layout_width="8dp"
-            android:layout_height="80dp"
+            android:layout_width="5.3dp"
+            android:layout_height="53dp"
             android:background="@drawable/qrcode_scan_round"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginStart="840dp"
-            android:layout_marginTop="600dp"/>
+            android:layout_marginStart="560dp"
+            android:layout_marginTop="401dp"/>
 
         <View
             android:id="@+id/qr_left_bottom_garo"
-            android:layout_width="80dp"
-            android:layout_height="8dp"
+            android:layout_width="53dp"
+            android:layout_height="5.3dp"
             android:background="@drawable/qrcode_scan_round"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginStart="840dp"
-            android:layout_marginTop="672dp"/>
+            android:layout_marginStart="560dp"
+            android:layout_marginTop="450dp"/>
 
         <View
             android:id="@+id/qr_right_top_sero"
-            android:layout_width="8dp"
-            android:layout_height="80dp"
+            android:layout_width="5.3dp"
+            android:layout_height="53dp"
             android:background="@drawable/qrcode_scan_round"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginStart="1072dp"
-            android:layout_marginTop="440dp"/>
+            android:layout_marginStart="714dp"
+            android:layout_marginTop="295dp"/>
 
         <View
             android:id="@+id/qr_right_top_garo"
-            android:layout_width="80dp"
-            android:layout_height="8dp"
+            android:layout_width="53dp"
+            android:layout_height="5.3dp"
             android:background="@drawable/qrcode_scan_round"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginStart="1000dp"
-            android:layout_marginTop="440dp"/>
+            android:layout_marginStart="666dp"
+            android:layout_marginTop="295dp"/>
 
         <View
             android:id="@+id/qr_right_bottom_sero"
-            android:layout_width="8dp"
-            android:layout_height="80dp"
+            android:layout_width="5.3dp"
+            android:layout_height="53dp"
             android:background="@drawable/qrcode_scan_round"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginStart="1072dp"
-            android:layout_marginTop="600dp"/>
+            android:layout_marginStart="714dp"
+            android:layout_marginTop="401dp"/>
 
         <View
             android:id="@+id/qr_right_bottom_garo"
-            android:layout_width="80dp"
-            android:layout_height="8dp"
+            android:layout_width="53dp"
+            android:layout_height="5.3dp"
             android:background="@drawable/qrcode_scan_round"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginStart="1000dp"
-            android:layout_marginTop="672dp"/>
+            android:layout_marginStart="666dp"
+            android:layout_marginTop="450dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="QR코드 등록하기"
-            android:textSize="30sp"
+            android:textSize="20sp"
             android:textColor="@color/black"
             android:fontFamily="@font/roboto_light"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="706dp"/>
+            android:layout_marginTop="470dp"/>
         
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/qr_btn"
-            android:layout_width="800dp"
-            android:layout_height="84dp"
+            android:layout_width="533dp"
+            android:layout_height="53dp"
             android:text="등록하기"
-            android:textSize="30sp"
+            android:textSize="20sp"
             android:textColor="@color/white"
             android:gravity="center"
             android:background="@drawable/btn_background"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="900dp"/>
+            android:layout_marginTop="678dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
