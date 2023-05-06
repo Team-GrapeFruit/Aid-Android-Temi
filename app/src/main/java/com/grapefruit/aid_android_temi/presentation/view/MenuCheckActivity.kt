@@ -35,7 +35,7 @@ class MenuCheckActivity : AppCompatActivity() {
         viewModel =
             ViewModelProvider(this)[MenuViewModel::class.java]
 
-        val storeId = intent.getLongExtra("storeId", 1)
+        val storeId = intent.getLongExtra("storeId", 0)
         viewModel.seatList(storeId, this)
 
 
