@@ -1,5 +1,6 @@
 package com.grapefruit.aid_android_temi.presentation.view
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -39,6 +40,12 @@ class SeatReserveActivity : AppCompatActivity() {
                     table.addView(createTable(i))
                 }
             }
+        }
+
+        binding.menuText.setOnClickListener {
+            val intent = Intent(this, MenuCheckActivity::class.java)
+            intent.putExtra("storeId", storeId)
+            startActivity(intent)
         }
     }
 

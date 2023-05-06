@@ -1,4 +1,4 @@
-package com.grapefruit.aid_android_temi.presentation.view
+package com.grapefruit.aid_android_temi.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,17 +7,17 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.grapefruit.aid_android_temi.R
-import com.grapefruit.aid_android_temi.databinding.RecyclerviewSeatItemBinding
 import com.grapefruit.aid_android_temi.data.model.dto.PurchaseDTO
+import com.grapefruit.aid_android_temi.databinding.RecyclerviewFoodItemBinding
 
-class SeatRecyclerAdapter(
-    val menuList: List<PurchaseDTO>,
+class FoodRecyclerAdapter(
+    val foodList: List<PurchaseDTO>,
     val inflater: LayoutInflater,
     val glide: RequestManager
 
-    ) : RecyclerView.Adapter<SeatRecyclerAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<FoodRecyclerAdapter.ViewHolder>() {
 
-    inner class ViewHolder(val binding: RecyclerviewSeatItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(val binding: RecyclerviewFoodItemBinding) : RecyclerView.ViewHolder(binding.root) {
         val menuImg: ImageView
         val menuName: TextView
         val menuPrice: TextView
@@ -32,16 +32,16 @@ class SeatRecyclerAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = inflater.inflate(R.layout.recyclerview_seat_item, parent, false)
-        return ViewHolder(RecyclerviewSeatItemBinding.bind(view))
+        val view = inflater.inflate(R.layout.recyclerview_food_item, parent, false)
+        return ViewHolder(RecyclerviewFoodItemBinding.bind(view))
     }
 
     override fun getItemCount(): Int {
-        return menuList.size
+        return foodList.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val menu = menuList[position]
+        val menu = foodList[position]
 
         menu.purchaseMenu.menuImgUrl.let {
             glide.load(it).centerCrop().into(holder.menuImg)
