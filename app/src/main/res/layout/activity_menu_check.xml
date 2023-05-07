@@ -48,41 +48,48 @@
         <!-- 메뉴목록 리스트 -->
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/pager"
-            android:layout_width="match_parent"
+            android:layout_width="485dp"
             android:layout_height="528dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="179dp"/>
 
         <!-- 이전 버튼 -->
         <ImageView
+            android:id="@+id/left_btn"
             android:layout_width="13.3dp"
             android:layout_height="26.6dp"
             android:src="@drawable/left_background"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tab_layout"
             app:layout_constraintTop_toTopOf="parent"
             android:padding="2dp"
-            android:layout_marginStart="524dp"
+            android:layout_marginEnd="25dp"
             android:layout_marginTop="746dp"/>
 
         <!-- 다음 버튼 -->
         <ImageView
+            android:id="@+id/right_btn"
             android:layout_width="13.3dp"
             android:layout_height="26.6dp"
             android:src="@drawable/right_background"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tab_layout"
             app:layout_constraintTop_toTopOf="parent"
             android:padding="2dp"
-            android:layout_marginStart="749dp"
+            android:layout_marginStart="25dp"
             android:layout_marginTop="746dp"/>
 
         <!-- 메뉴 텝뷰 -->
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
-            android:layout_width="167dp"
+            android:layout_width="wrap_content"
             android:layout_height="33dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:tabIndicatorColor="@android:color/white"
+            app:tabTextColor="@color/black"
+            app:tabTextAppearance="@style/TabLayout"
             android:layout_marginTop="740dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
