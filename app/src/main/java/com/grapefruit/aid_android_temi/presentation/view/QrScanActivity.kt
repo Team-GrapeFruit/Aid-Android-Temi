@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.vision.CameraSource
 import com.google.android.gms.vision.Detector
@@ -25,8 +26,10 @@ import com.grapefruit.aid_android_temi.R
 import com.grapefruit.aid_android_temi.databinding.ActivityQrScanBinding
 import com.grapefruit.aid_android_temi.presentation.viewmodel.QrcodeViewModel
 import com.journeyapps.barcodescanner.*
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
 
+@AndroidEntryPoint
 class QrScanActivity : AppCompatActivity(), SurfaceHolder.Callback {
 
     private lateinit var cameraSource: CameraSource
@@ -46,6 +49,9 @@ class QrScanActivity : AppCompatActivity(), SurfaceHolder.Callback {
 
         viewModel =
             ViewModelProvider(this)[QrcodeViewModel::class.java]
+
+        viewModel.robot.setKioskModeOn(true)
+        viewModel.robot.hideTopBar()
 
         checkPermission()
 

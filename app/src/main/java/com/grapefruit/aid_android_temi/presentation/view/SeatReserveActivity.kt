@@ -15,7 +15,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.grapefruit.aid_android_temi.R
 import com.grapefruit.aid_android_temi.databinding.ActivitySeatReserveBinding
 import com.grapefruit.aid_android_temi.presentation.viewmodel.SeatReserveViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SeatReserveActivity : AppCompatActivity() {
 
     lateinit var binding: ActivitySeatReserveBinding
@@ -30,6 +32,9 @@ class SeatReserveActivity : AppCompatActivity() {
 
         viewModel =
             ViewModelProvider(this)[SeatReserveViewModel::class.java]
+
+        viewModel.robot.setKioskModeOn(true)
+        viewModel.robot.hideTopBar()
 
         storeId = intent.getLongExtra("storeId", 0)
         viewModel.seatList(storeId, this)

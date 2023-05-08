@@ -9,5 +9,6 @@
     <string name="next">이동하기</string>
     <string name="arrival">도착 완료!</string>
     <string name="food">음식을 받으신 후에 이동하기 버튼을 눌러주세요!</string>
-
+    <string name="go_homebase">홈베이스로 이동중 잠시 비켜주세요!</string>
+    <string name="go_table">%1$s번 자리로 이동중 잠시 비켜주세요!</string>
 </resources>

@@ -7,9 +7,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.grapefruit.aid_android_temi.data.model.dto.StoreDTO
 import com.grapefruit.aid_android_temi.data.model.retrofit.RetrofitBuilder
+import com.robotemi.sdk.Robot
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class QrcodeViewModel : ViewModel() {
+@HiltViewModel
+class QrcodeViewModel @Inject constructor(
+    val robot: Robot
+): ViewModel() {
 
     private var _storeInfo = MutableLiveData<StoreDTO>()
     val storeInfo: LiveData<StoreDTO> get() = _storeInfo

@@ -20,7 +20,9 @@ import com.grapefruit.aid_android_temi.presentation.adapter.MenuRecyclerAdapter
 import com.grapefruit.aid_android_temi.presentation.adapter.SeatRecyclerAdapter
 import com.grapefruit.aid_android_temi.presentation.viewmodel.MenuViewModel
 import com.grapefruit.aid_android_temi.presentation.viewmodel.SeatReserveViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MenuCheckActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMenuCheckBinding
@@ -34,6 +36,9 @@ class MenuCheckActivity : AppCompatActivity() {
 
         viewModel =
             ViewModelProvider(this)[MenuViewModel::class.java]
+
+        viewModel.robot.setKioskModeOn(true)
+        viewModel.robot.hideTopBar()
 
         val storeId = intent.getLongExtra("storeId", 0)
         viewModel.seatList(storeId, this)

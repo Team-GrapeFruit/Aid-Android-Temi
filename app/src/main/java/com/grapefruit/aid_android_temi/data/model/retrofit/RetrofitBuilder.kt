@@ -17,7 +17,7 @@ object RetrofitBuilder {
             .build()
     }
 
-    val service: QRService by lazy {
+    val qrService: QRService by lazy {
         retrofit.create(QRService::class.java)
     }
 
@@ -26,6 +26,6 @@ object RetrofitBuilder {
     }
 
     suspend fun searchStore(storeId: Long): Response<StoreDTO> {
-        return service.searchStore(storeId)
+        return qrService.searchStore(storeId)
     }
 }

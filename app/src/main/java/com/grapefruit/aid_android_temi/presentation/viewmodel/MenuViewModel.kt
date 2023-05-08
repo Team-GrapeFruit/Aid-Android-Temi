@@ -10,11 +10,14 @@ import com.grapefruit.aid_android_temi.data.model.dto.PurchaseDTO
 import com.grapefruit.aid_android_temi.data.model.retrofit.RetrofitBuilder
 import com.grapefruit.aid_android_temi.presentation.view.MenuCheckActivity
 import com.grapefruit.aid_android_temi.presentation.view.SeatReserveActivity
+import com.robotemi.sdk.Robot
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MenuViewModel: ViewModel() {
+class MenuViewModel constructor(
+    val robot: Robot
+): ViewModel() {
 
     private val _seatListResponse = MutableLiveData<CheckSeatDTO>()
     val seatListResponse: LiveData<CheckSeatDTO> get() = _seatListResponse

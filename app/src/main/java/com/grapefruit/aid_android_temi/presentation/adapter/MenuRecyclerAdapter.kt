@@ -64,6 +64,7 @@ class MenuRecyclerAdapter(
         }
 
         holder.nextBtn.setOnClickListener {
+
             val intent = Intent(activity, MoveActivity::class.java)
             intent.putExtra("seatNum", menu.seatNum)
             activity.startActivity(intent)
