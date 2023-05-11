@@ -47,6 +47,8 @@ class SeatReserveDialog(
             }
 
             nextBtn.setOnClickListener {
+                viewModel.moveStart(seatId)
+
                 val intent = Intent(context, MoveActivity::class.java)
                 intent.putExtra("seatNum", seatNum.toString())
                 context.startActivity(intent)
