@@ -1,6 +1,7 @@
 package com.grapefruit.aid_android_temi.presentation.adapter
 
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Button
@@ -8,17 +9,17 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.grapefruit.aid_android_temi.R
-import com.grapefruit.aid_android_temi.data.model.dto.CheckSeatDTO
-import com.grapefruit.aid_android_temi.data.model.dto.PurchaseDTO
+import com.grapefruit.aid_android_temi.data.dto.CheckSeatDTO
+import com.grapefruit.aid_android_temi.data.dto.PurchaseDTO
 import com.grapefruit.aid_android_temi.databinding.RecyclerviewMenuItemBinding
 import com.grapefruit.aid_android_temi.presentation.view.MenuCheckActivity
 import com.grapefruit.aid_android_temi.presentation.view.MoveActivity
-import com.grapefruit.aid_android_temi.presentation.viewmodel.MenuViewModel
+import com.grapefruit.aid_android_temi.presentation.viewmodel.MainViewModel
 
 class MenuRecyclerAdapter(
     val menuList: CheckSeatDTO,
     val inflater: LayoutInflater,
-    val viewModel: MenuViewModel,
+    val viewModel: MainViewModel,
     val activity: MenuCheckActivity,
     val glide: RequestManager
 
@@ -47,14 +48,13 @@ class MenuRecyclerAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val menu = menuList.singleSeatResponse[position]
-        var foodList: List<PurchaseDTO>
 
         holder.number.text = menu.seatNum.toString() + "번"
 
-        viewModel.menuList(menu.seatId, activity)
+        viewModel.menuList(menu.seatId)
 
         viewModel.menuListResponse.observe(activity) {
-            foodList = it
+            Log.d("menuList", "$it")
             val foodRecycler = holder.foodRecycler
             foodRecycler.adapter = FoodRecyclerAdapter(
                 it,
@@ -64,9 +64,10 @@ class MenuRecyclerAdapter(
         }
 
         holder.nextBtn.setOnClickListener {
-
             val intent = Intent(activity, MoveActivity::class.java)
-            intent.putExtra("seatNum", menu.seatNum)
+            val seatNum = menu.seatNum.toString()
+            viewModel.moveStart(menu.seatId)
+            intent.putExtra("seatNum", seatNum)
             activity.startActivity(intent)
         }
     }

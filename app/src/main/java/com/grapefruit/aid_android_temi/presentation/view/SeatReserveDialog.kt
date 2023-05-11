@@ -2,50 +2,58 @@ package com.grapefruit.aid_android_temi.presentation.view
 
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.Window
+import android.view.*
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
+import com.grapefruit.aid_android_temi.R
 import com.grapefruit.aid_android_temi.databinding.DialogSeatReserveBinding
 import com.grapefruit.aid_android_temi.presentation.adapter.SeatRecyclerAdapter
-import com.grapefruit.aid_android_temi.presentation.viewmodel.SeatReserveViewModel
+import com.grapefruit.aid_android_temi.presentation.viewmodel.MainViewModel
 
-class SeatReserveDialog(private val context: SeatReserveActivity) : DialogFragment() {
+class SeatReserveDialog(
+    private val context: SeatReserveActivity,
+    private val seatNum: Long,
+    private val seatId: Long
+) : DialogFragment() {
 
-    lateinit var binding: DialogSeatReserveBinding
-    lateinit var viewModel: SeatReserveViewModel
-    private val dlg = Dialog(context)
+    private var _binding: DialogSeatReserveBinding? = null
+    private val binding get() = _binding!!
+    private val viewModel: MainViewModel by viewModels()
 
-    fun show(seatNum: Long, seatId: Long) {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = DialogSeatReserveBinding.inflate(inflater, container, false)
+        val view = binding.root
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
+        dialog?.setCancelable(true)
 
-        viewModel =
-            ViewModelProvider(context)[SeatReserveViewModel::class.java]
+        initDialog()
+        return view
+    }
 
-        viewModel.menuList(seatId, context)
-
-        binding = DialogSeatReserveBinding.inflate(context.layoutInflater)
-
-        Log.d("menuList", "${viewModel.menuListResponse.value}")
-
-        dlg.requestWindowFeature(Window.FEATURE_NO_TITLE)   // 타이틀바 제거
-        dlg.setContentView(binding.root)     // 다이얼로그에 사용할 xml 파일을 불러옴
-        dlg.setCancelable(true)    // 다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히도록
-
-
+    fun initDialog() {
         with(binding) {
-            number.text = "" + seatNum + "번"
+            number.text = getString(R.string.table_number, seatNum.toString())
             cancelBtn.setOnClickListener {
-                dlg.dismiss()
             }
 
             nextBtn.setOnClickListener {
                 val intent = Intent(context, MoveActivity::class.java)
-                intent.putExtra("seatNum", seatNum)
+                intent.putExtra("seatNum", seatNum.toString())
                 context.startActivity(intent)
             }
         }
+
+        viewModel.menuList(seatId)
 
         viewModel.menuListResponse.observe(context) {
             Log.d("menuList", "$it")
@@ -56,6 +64,10 @@ class SeatReserveDialog(private val context: SeatReserveActivity) : DialogFragme
                 Glide.with(context)
             )
         }
-        dlg.show()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

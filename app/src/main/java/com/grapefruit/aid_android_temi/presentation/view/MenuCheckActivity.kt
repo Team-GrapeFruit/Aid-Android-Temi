@@ -1,15 +1,13 @@
 package com.grapefruit.aid_android_temi.presentation.view
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import androidx.core.view.get
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
@@ -17,32 +15,25 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.grapefruit.aid_android_temi.R
 import com.grapefruit.aid_android_temi.databinding.ActivityMenuCheckBinding
 import com.grapefruit.aid_android_temi.presentation.adapter.MenuRecyclerAdapter
-import com.grapefruit.aid_android_temi.presentation.adapter.SeatRecyclerAdapter
-import com.grapefruit.aid_android_temi.presentation.viewmodel.MenuViewModel
-import com.grapefruit.aid_android_temi.presentation.viewmodel.SeatReserveViewModel
-import dagger.hilt.android.AndroidEntryPoint
+import com.grapefruit.aid_android_temi.presentation.viewmodel.MainViewModel
+import com.robotemi.sdk.Robot
 
-@AndroidEntryPoint
 class MenuCheckActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMenuCheckBinding
-    lateinit var viewModel: MenuViewModel
+    private val viewModel: MainViewModel by viewModels()
+    private val robot = Robot
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_menu_check)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_menu_check)
 
-        viewModel =
-            ViewModelProvider(this)[MenuViewModel::class.java]
-
-        viewModel.robot.setKioskModeOn(true)
-        viewModel.robot.hideTopBar()
+        robot.getInstance().setKioskModeOn(true)
+        robot.getInstance().hideTopBar()
 
         val storeId = intent.getLongExtra("storeId", 0)
-        viewModel.seatList(storeId, this)
-
+        viewModel.seatList(storeId)
 
         viewModel.seatListResponse.observe(this) {
             Log.d("seatList", "$it")
@@ -79,7 +70,7 @@ class MenuCheckActivity : AppCompatActivity() {
                 override fun onTabSelected(tab: TabLayout.Tab?) {
                     tabLayout.getTabAt(tab!!.position)?.view?.setBackgroundResource(R.drawable.empty_background)
 
-                    viewModel.menuList(seatList.singleSeatResponse[tab!!.position].seatId, this@MenuCheckActivity)
+                    viewModel.menuList(seatList.singleSeatResponse[tab!!.position].seatId)
                 }
 
                 override fun onTabUnselected(tab: TabLayout.Tab?) {
@@ -89,7 +80,7 @@ class MenuCheckActivity : AppCompatActivity() {
                 override fun onTabReselected(tab: TabLayout.Tab?) {
                     tabLayout.getTabAt(tab!!.position)?.view?.setBackgroundResource(R.drawable.empty_background)
 
-                    viewModel.menuList(seatList.singleSeatResponse[tab!!.position].seatId, this@MenuCheckActivity)
+                    viewModel.menuList(seatList.singleSeatResponse[tab!!.position].seatId)
                 }
             })
 

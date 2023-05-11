@@ -4,10 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.res.TypedArrayUtils.getString
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.grapefruit.aid_android_temi.R
-import com.grapefruit.aid_android_temi.data.model.dto.PurchaseDTO
+import com.grapefruit.aid_android_temi.data.dto.PurchaseDTO
 import com.grapefruit.aid_android_temi.databinding.RecyclerviewFoodItemBinding
 
 class FoodRecyclerAdapter(

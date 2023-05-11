@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.grapefruit.aid_android_temi.R
 import com.grapefruit.aid_android_temi.databinding.RecyclerviewSeatItemBinding
-import com.grapefruit.aid_android_temi.data.model.dto.PurchaseDTO
+import com.grapefruit.aid_android_temi.data.dto.PurchaseDTO
 
 class SeatRecyclerAdapter(
     val menuList: List<PurchaseDTO>,
