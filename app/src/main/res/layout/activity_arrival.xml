@@ -54,7 +54,7 @@
 
         <!-- 이동하기 버튼 -->
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/temi_text"
+            android:id="@+id/home_btn"
             android:layout_width="800dp"
             android:layout_height="75dp"
             android:text="@string/next"

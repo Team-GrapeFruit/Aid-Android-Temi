@@ -6,6 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="435dp"
         android:layout_height="508dp"
+        android:layout_gravity="center"
         android:background="@drawable/dialog_background"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">

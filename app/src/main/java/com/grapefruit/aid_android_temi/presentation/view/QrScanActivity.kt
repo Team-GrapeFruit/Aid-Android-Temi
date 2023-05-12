@@ -1,30 +1,25 @@
 package com.grapefruit.aid_android_temi.presentation.view
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.SurfaceHolder
 import android.view.SurfaceView
-import android.view.View
-import android.widget.Toast
+import android.view.View.VISIBLE
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.vision.CameraSource
 import com.google.android.gms.vision.Detector
 import com.google.android.gms.vision.barcode.Barcode
 import com.google.android.gms.vision.barcode.BarcodeDetector
-import com.google.zxing.BarcodeFormat
-import com.google.zxing.ResultPoint
 import com.grapefruit.aid_android_temi.R
 import com.grapefruit.aid_android_temi.databinding.ActivityQrScanBinding
-import com.grapefruit.aid_android_temi.presentation.viewmodel.QrcodeViewModel
-import com.journeyapps.barcodescanner.*
+import com.grapefruit.aid_android_temi.presentation.viewmodel.MainViewModel
+import com.robotemi.sdk.Robot
 import java.io.IOException
 
 class QrScanActivity : AppCompatActivity(), SurfaceHolder.Callback {
@@ -33,24 +28,25 @@ class QrScanActivity : AppCompatActivity(), SurfaceHolder.Callback {
     private lateinit var surfaceView: SurfaceView
     private var isScanned: Boolean = false
     lateinit var binding: ActivityQrScanBinding
-    lateinit var viewModel: QrcodeViewModel
+    private val viewModel: MainViewModel by viewModels()
+    private val robot = Robot
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_qr_scan)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_qr_scan)
 
         surfaceView = binding.surfaceView
         surfaceView.holder.addCallback(this)
 
-        viewModel =
-            ViewModelProvider(this)[QrcodeViewModel::class.java]
+        robot.getInstance().setKioskModeOn(true)
+        robot.getInstance().hideTopBar()
 
         checkPermission()
 
-        binding.qrBtn.setOnClickListener {
-            viewModel.storeInfo.observe(this){
+        viewModel.storeInfo.observe(this) {
+            binding.qrBtn.visibility = VISIBLE
+            binding.qrBtn.setOnClickListener {
                 val intent = Intent(this, SeatReserveActivity::class.java)
                 intent.putExtra("storeId", viewModel.storeInfo.value?.storeId)
                 startActivity(intent)
@@ -59,7 +55,8 @@ class QrScanActivity : AppCompatActivity(), SurfaceHolder.Callback {
     }
 
     private fun checkPermission() {
-        val cameraPermission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
+        val cameraPermission =
+            ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
         if (cameraPermission == PackageManager.PERMISSION_GRANTED) {
             // 카메라 권한이 승인된 상태일 경우
             setupControls()
@@ -91,7 +88,13 @@ class QrScanActivity : AppCompatActivity(), SurfaceHolder.Callback {
                 }
             }
 
-            override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {}
+            override fun surfaceChanged(
+                holder: SurfaceHolder,
+                format: Int,
+                width: Int,
+                height: Int
+            ) {
+            }
 
             override fun surfaceDestroyed(holder: SurfaceHolder) {
                 cameraSource.stop()
@@ -120,10 +123,14 @@ class QrScanActivity : AppCompatActivity(), SurfaceHolder.Callback {
         })
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        when(requestCode){
-            1004 ->{
-                if(grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            1004 -> {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     setupControls()
                 } else {
                     finish()

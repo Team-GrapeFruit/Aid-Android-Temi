@@ -7,20 +7,22 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
 import com.grapefruit.aid_android_temi.R
 import com.grapefruit.aid_android_temi.databinding.ActivitySeatReserveBinding
-import com.grapefruit.aid_android_temi.presentation.viewmodel.SeatReserveViewModel
+import com.grapefruit.aid_android_temi.presentation.viewmodel.MainViewModel
+import com.robotemi.sdk.Robot
 
 class SeatReserveActivity : AppCompatActivity() {
 
     lateinit var binding: ActivitySeatReserveBinding
-    lateinit var viewModel: SeatReserveViewModel
-    var storeId: Long = 0
+    private val viewModel: MainViewModel by viewModels()
+    private var storeId: Long = 1
+    private val robot = Robot
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,11 +30,11 @@ class SeatReserveActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_reserve)
         binding.activity = this
 
-        viewModel =
-            ViewModelProvider(this)[SeatReserveViewModel::class.java]
+        robot.getInstance().setKioskModeOn(true)
+        robot.getInstance().hideTopBar()
 
-        storeId = intent.getLongExtra("storeId", 0)
-        viewModel.seatList(storeId, this)
+        storeId = intent.getLongExtra("storeId", 1)
+        viewModel.seatList(storeId)
 
         viewModel.seatListResponse.observe(this) {
             with(binding) {
@@ -52,7 +54,7 @@ class SeatReserveActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        viewModel.seatList(storeId, this)
+        viewModel.seatList(storeId)
     }
 
     private fun createTable(index: Int): View {
@@ -62,7 +64,7 @@ class SeatReserveActivity : AppCompatActivity() {
         table.height = heightSize(seatList.customerNum)
         table.x = seatList.locationX
         table.y = seatList.locationY
-        table.text = "" + seatList.seatNum + "번\n"
+        table.text = getString(R.string.table_number, seatList.seatNum.toString())
         table.setTextColor(
             ContextCompat.getColor(
                 this,
@@ -76,7 +78,10 @@ class SeatReserveActivity : AppCompatActivity() {
         table.id = ViewCompat.generateViewId()
         Log.d("table", "${table.id}")
         table.setOnClickListener {
-            SeatReserveDialog(this).show(seatList.seatNum, seatList.seatId)
+            val dialog = SeatReserveDialog(this, seatList.seatNum, seatList.seatId)
+            Log.d("dialog", "${seatList.seatNum}" + "${seatList.seatId}")
+
+            dialog.show(this.supportFragmentManager, "CustomDialog")
         }
         return table
     }
