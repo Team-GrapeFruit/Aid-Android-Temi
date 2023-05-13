@@ -41,7 +41,7 @@ class MenuCheckActivity : AppCompatActivity() {
             val pager = binding.pager
             val tabLayout = binding.tabLayout
             val lastPosition = it.singleSeatResponse.lastIndex
-            var seatList = it
+            val seatList = it
 
             pager.adapter = MenuRecyclerAdapter(
                 it,
@@ -105,6 +105,7 @@ class MenuCheckActivity : AppCompatActivity() {
             val intent = Intent(this, SeatReserveActivity::class.java)
             intent.putExtra("storeId", storeId)
             startActivity(intent)
+            overridePendingTransition(0, 0)
         }
     }
 }

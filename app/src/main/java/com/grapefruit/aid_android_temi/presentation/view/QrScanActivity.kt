@@ -56,7 +56,7 @@ class QrScanActivity : AppCompatActivity(), SurfaceHolder.Callback {
 
     private fun checkPermission() {
         val cameraPermission =
-            ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
+            ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
         if (cameraPermission == PackageManager.PERMISSION_GRANTED) {
             // 카메라 권한이 승인된 상태일 경우
             setupControls()
@@ -71,6 +71,11 @@ class QrScanActivity : AppCompatActivity(), SurfaceHolder.Callback {
     }
 
     private fun setupControls() {
+        if (surfaceView.holder.surface == null) {
+            // SurfaceView가 생성되지 않은 경우
+            return
+        }
+
         val barcodeDetector = BarcodeDetector.Builder(this)
             .setBarcodeFormats(Barcode.QR_CODE)
             .build()
@@ -112,7 +117,6 @@ class QrScanActivity : AppCompatActivity(), SurfaceHolder.Callback {
                     isScanned = true
                     val barcodes = detections.detectedItems
                     if (barcodes.size() != 0) {
-                        print("test")
                         val barcodeValue = barcodes.valueAt(0).displayValue // 스캔된 바코드 값
                         viewModel.storeLoad(barcodeValue.toLong())
                         release()

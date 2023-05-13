@@ -1,7 +1,9 @@
 package com.grapefruit.aid_android_temi.data.dto
 
+import com.google.gson.annotations.SerializedName
+
 data class PurchaseDTO(
-    val purchaseId: Long,
-    val quantity: Long,
-    val purchaseMenu: MenuDTO
+    @SerializedName("purchaseId") val purchaseId: Long,
+    @SerializedName("quantity") val quantity: Long,
+    @SerializedName("purchaseMenu") val purchaseMenu: MenuDTO
 )
