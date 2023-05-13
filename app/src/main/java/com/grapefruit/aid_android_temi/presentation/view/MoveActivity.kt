@@ -18,15 +18,15 @@ class MoveActivity : AppCompatActivity(), OnGoToLocationStatusChangedListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_move)
-        binding.activity = this
-
         val seatNum = intent.getStringExtra("seatNum")
         Log.d("seatNum", seatNum!!)
 
-        robot.getInstance().goTo(seatNum!!)
         robot.getInstance().addOnGoToLocationStatusChangedListener(this)
+        robot.getInstance().goTo(seatNum!!)
         robot.getInstance().hideTopBar()
+
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_move)
+        binding.activity = this
 
         binding.temiText.text =
             when (seatNum) {

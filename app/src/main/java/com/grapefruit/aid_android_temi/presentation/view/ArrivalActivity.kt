@@ -16,6 +16,9 @@ class ArrivalActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        robot.getInstance().setKioskModeOn(true)
+        robot.getInstance().hideTopBar()
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_arrival)
 
         binding.homeBtn.setOnClickListener {

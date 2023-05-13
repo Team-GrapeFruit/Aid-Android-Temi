@@ -5,11 +5,9 @@ import com.grapefruit.aid_android_temi.data.api.QRApi
 import com.grapefruit.aid_android_temi.data.api.SeatApi
 import com.grapefruit.aid_android_temi.data.dto.CheckSeatDTO
 import com.grapefruit.aid_android_temi.data.dto.PurchaseDTO
-import dagger.Provides
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Singleton
 
 object NetworkModule {
     private const val BASE_URL = "https://port-0-aid-backend-user-nx562oley4rk2t.sel3.cloudtype.app/"

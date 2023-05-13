@@ -21,7 +21,7 @@ class SeatReserveActivity : AppCompatActivity() {
 
     lateinit var binding: ActivitySeatReserveBinding
     private val viewModel: MainViewModel by viewModels()
-    private var storeId: Long = 1
+    private var storeId: Long = 0
     private val robot = Robot
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +33,7 @@ class SeatReserveActivity : AppCompatActivity() {
         robot.getInstance().setKioskModeOn(true)
         robot.getInstance().hideTopBar()
 
-        storeId = intent.getLongExtra("storeId", 1)
+        storeId = intent.getLongExtra("storeId", 0)
         viewModel.seatList(storeId)
 
         viewModel.seatListResponse.observe(this) {
@@ -48,6 +48,7 @@ class SeatReserveActivity : AppCompatActivity() {
             val intent = Intent(this, MenuCheckActivity::class.java)
             intent.putExtra("storeId", storeId)
             startActivity(intent)
+            overridePendingTransition(0, 0)
         }
     }
 

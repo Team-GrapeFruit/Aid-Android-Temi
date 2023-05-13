@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.grapefruit.aid_android_temi.R
 import com.grapefruit.aid_android_temi.data.dto.CheckSeatDTO
-import com.grapefruit.aid_android_temi.data.dto.PurchaseDTO
 import com.grapefruit.aid_android_temi.databinding.RecyclerviewMenuItemBinding
 import com.grapefruit.aid_android_temi.presentation.view.MenuCheckActivity
 import com.grapefruit.aid_android_temi.presentation.view.MoveActivity
