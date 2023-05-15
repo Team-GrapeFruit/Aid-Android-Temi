@@ -4,30 +4,28 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.view.SurfaceHolder
-import android.view.SurfaceView
+import android.view.View
 import android.view.View.VISIBLE
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import com.google.android.gms.vision.CameraSource
-import com.google.android.gms.vision.Detector
-import com.google.android.gms.vision.barcode.Barcode
-import com.google.android.gms.vision.barcode.BarcodeDetector
+import com.budiyev.android.codescanner.AutoFocusMode
+import com.budiyev.android.codescanner.CodeScanner
+import com.budiyev.android.codescanner.DecodeCallback
+import com.budiyev.android.codescanner.ErrorCallback
+import com.budiyev.android.codescanner.ScanMode
 import com.grapefruit.aid_android_temi.R
 import com.grapefruit.aid_android_temi.databinding.ActivityQrScanBinding
 import com.grapefruit.aid_android_temi.presentation.viewmodel.MainViewModel
 import com.robotemi.sdk.Robot
-import java.io.IOException
 
-class QrScanActivity : AppCompatActivity(), SurfaceHolder.Callback {
 
-    private lateinit var cameraSource: CameraSource
-    private lateinit var surfaceView: SurfaceView
-    private var isScanned: Boolean = false
-    lateinit var binding: ActivityQrScanBinding
+class QrScanActivity : AppCompatActivity() {
+    private lateinit var codeScanner: CodeScanner
+    private lateinit var binding: ActivityQrScanBinding
     private val viewModel: MainViewModel by viewModels()
     private val robot = Robot
 
@@ -36,13 +34,11 @@ class QrScanActivity : AppCompatActivity(), SurfaceHolder.Callback {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_qr_scan)
 
-        surfaceView = binding.surfaceView
-        surfaceView.holder.addCallback(this)
+        setupPermissions()
+        setupCodeScanner()
 
         robot.getInstance().setKioskModeOn(true)
         robot.getInstance().hideTopBar()
-
-        checkPermission()
 
         viewModel.storeInfo.observe(this) {
             binding.qrBtn.visibility = VISIBLE
@@ -54,77 +50,59 @@ class QrScanActivity : AppCompatActivity(), SurfaceHolder.Callback {
         }
     }
 
-    private fun checkPermission() {
-        val cameraPermission =
-            ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-        if (cameraPermission == PackageManager.PERMISSION_GRANTED) {
-            // 카메라 권한이 승인된 상태일 경우
-            setupControls()
-        } else {
-            // 카메라 권한이 승인되지 않았을 경우
-            requestPermission()
+    private fun setupPermissions() {
+        val cameraPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+        if (cameraPermission != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), 1004)
         }
     }
 
-    private fun requestPermission() {
-        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), 1004)
+    private fun setupCodeScanner() {
+        val codeScannerView = binding.codeScannerView
+        codeScanner = CodeScanner(this, codeScannerView)
+
+        codeScanner.apply {
+            camera = CodeScanner.CAMERA_BACK
+            formats = CodeScanner.ALL_FORMATS
+            autoFocusMode = AutoFocusMode.SAFE
+            scanMode = ScanMode.SINGLE
+            isAutoFocusEnabled = true
+            isFlashEnabled = false
+
+            decodeCallback = DecodeCallback {
+                runOnUiThread {
+                    val barcodeValue = it.text // 스캔된 바코드 값
+                    viewModel.storeLoad(barcodeValue.toLong())
+                }
+            }
+
+            errorCallback = ErrorCallback {
+                runOnUiThread {
+                    Toast.makeText(this@QrScanActivity, "Error: ${it.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            codeScannerView.setOnClickListener {
+                codeScanner.startPreview()
+            }
+        }
     }
 
-    private fun setupControls() {
-        if (surfaceView.holder.surface == null) {
-            // SurfaceView가 생성되지 않은 경우
-            return
+    override fun onResume() {
+
+        binding.qrBtn.visibility = View.GONE
+
+        super.onResume()
+        if (::codeScanner.isInitialized) {
+            codeScanner.startPreview()
         }
+    }
 
-        val barcodeDetector = BarcodeDetector.Builder(this)
-            .setBarcodeFormats(Barcode.QR_CODE)
-            .build()
-
-        cameraSource = CameraSource.Builder(this, barcodeDetector)
-            .setAutoFocusEnabled(true)
-            .build()
-
-        surfaceView.holder.addCallback(object : SurfaceHolder.Callback {
-            override fun surfaceCreated(holder: SurfaceHolder) {
-                try {
-                    cameraSource.start(holder)
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                }
-            }
-
-            override fun surfaceChanged(
-                holder: SurfaceHolder,
-                format: Int,
-                width: Int,
-                height: Int
-            ) {
-            }
-
-            override fun surfaceDestroyed(holder: SurfaceHolder) {
-                cameraSource.stop()
-            }
-        })
-
-        barcodeDetector.setProcessor(object : Detector.Processor<Barcode> {
-            override fun release() {
-                cameraSource.stop()
-                isScanned = false
-            }
-
-            override fun receiveDetections(detections: Detector.Detections<Barcode>) {
-                if (true) {
-                    isScanned = true
-                    val barcodes = detections.detectedItems
-                    if (barcodes.size() != 0) {
-                        val barcodeValue = barcodes.valueAt(0).displayValue // 스캔된 바코드 값
-                        viewModel.storeLoad(barcodeValue.toLong())
-                        release()
-                        finish()
-                    }
-                }
-            }
-        })
+    override fun onPause() {
+        if (::codeScanner.isInitialized) {
+            codeScanner.releaseResources()
+        }
+        super.onPause()
     }
 
     override fun onRequestPermissionsResult(
@@ -134,8 +112,8 @@ class QrScanActivity : AppCompatActivity(), SurfaceHolder.Callback {
     ) {
         when (requestCode) {
             1004 -> {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    setupControls()
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    setupCodeScanner()
                 } else {
                     finish()
                 }
@@ -145,12 +123,4 @@ class QrScanActivity : AppCompatActivity(), SurfaceHolder.Callback {
             }
         }
     }
-
-    override fun surfaceCreated(holder: SurfaceHolder) {
-        //checkPermission()
-    }
-
-    override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {}
-
-    override fun surfaceDestroyed(holder: SurfaceHolder) {}
 }

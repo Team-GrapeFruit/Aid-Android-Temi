@@ -65,6 +65,7 @@ dependencies {
     kapt "com.google.dagger:hilt-compiler:2.44"
     implementation "androidx.activity:activity-ktx:1.7.1"
     implementation "androidx.fragment:fragment-ktx:1.5.7"
+    implementation 'com.github.yuriy-budiyev:code-scanner:2.3.2'
 
 }
 
