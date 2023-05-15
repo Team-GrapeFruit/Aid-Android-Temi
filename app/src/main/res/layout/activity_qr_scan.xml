@@ -12,10 +12,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <SurfaceView
-            android:id="@+id/surface_view"
+        <com.budiyev.android.codescanner.CodeScannerView
+            android:id="@+id/code_scanner_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            app:autoFocusButtonVisible="false"
+            app:flashButtonVisible="false"
+            app:frameVisible="false"
+            app:maskVisible="false"/>
         
         <View
             android:id="@+id/qr_left_top_sero"
