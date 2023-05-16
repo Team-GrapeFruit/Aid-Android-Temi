@@ -2,6 +2,7 @@ package com.grapefruit.aid_android_temi.presentation.view
 
 import android.Manifest
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
@@ -26,11 +27,14 @@ class QrScanActivity : AppCompatActivity() {
     private lateinit var codeScanner: CodeScanner
     private lateinit var binding: ActivityQrScanBinding
     private val viewModel: MainViewModel by viewModels()
+    private lateinit var sharedPreferences: SharedPreferences
     private lateinit var robot: Robot
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_qr_scan)
+
+        sharedPreferences = getSharedPreferences("MyPreferences", MODE_PRIVATE)
 
         setupPermissions()
         setupCodeScanner()
@@ -40,10 +44,17 @@ class QrScanActivity : AppCompatActivity() {
         robot.hideTopBar()
 
         viewModel.storeInfo.observe(this) {
+
+            val storeId = viewModel.storeInfo.value?.storeId
+            if (storeId != null) {
+                val editor = sharedPreferences.edit()
+                editor.putLong("storeId", storeId)
+                editor.apply()
+            }
+
             binding.qrBtn.visibility = VISIBLE
             binding.qrBtn.setOnClickListener {
                 val intent = Intent(this, SeatReserveActivity::class.java)
-                intent.putExtra("storeId", viewModel.storeInfo.value?.storeId)
                 startActivity(intent)
             }
         }

@@ -43,6 +43,7 @@ class SeatReserveDialog(
         with(binding) {
             number.text = getString(R.string.table_number, seatNum.toString())
             cancelBtn.setOnClickListener {
+                dialog?.dismiss()
             }
 
             nextBtn.setOnClickListener {
