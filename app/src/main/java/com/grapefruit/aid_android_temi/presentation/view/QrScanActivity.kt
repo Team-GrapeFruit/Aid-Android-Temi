@@ -4,9 +4,8 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.view.View
+import android.util.Log
 import android.view.View.VISIBLE
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -27,18 +26,18 @@ class QrScanActivity : AppCompatActivity() {
     private lateinit var codeScanner: CodeScanner
     private lateinit var binding: ActivityQrScanBinding
     private val viewModel: MainViewModel by viewModels()
-    private val robot = Robot
+    private lateinit var robot: Robot
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_qr_scan)
 
         setupPermissions()
         setupCodeScanner()
 
-        robot.getInstance().setKioskModeOn(true)
-        robot.getInstance().hideTopBar()
+        robot = Robot.getInstance()
+        robot.setKioskModeOn(true)
+        robot.hideTopBar()
 
         viewModel.storeInfo.observe(this) {
             binding.qrBtn.visibility = VISIBLE
@@ -65,20 +64,20 @@ class QrScanActivity : AppCompatActivity() {
             camera = CodeScanner.CAMERA_BACK
             formats = CodeScanner.ALL_FORMATS
             autoFocusMode = AutoFocusMode.SAFE
-            scanMode = ScanMode.SINGLE
+            scanMode = ScanMode.CONTINUOUS
             isAutoFocusEnabled = true
             isFlashEnabled = false
 
             decodeCallback = DecodeCallback {
                 runOnUiThread {
-                    val barcodeValue = it.text // 스캔된 바코드 값
+                    val barcodeValue = it.text
                     viewModel.storeLoad(barcodeValue.toLong())
                 }
             }
 
             errorCallback = ErrorCallback {
                 runOnUiThread {
-                    Toast.makeText(this@QrScanActivity, "Error: ${it.message}", Toast.LENGTH_SHORT).show()
+                    Log.e("QR", it.message!!)
                 }
             }
 
@@ -89,9 +88,6 @@ class QrScanActivity : AppCompatActivity() {
     }
 
     override fun onResume() {
-
-        binding.qrBtn.visibility = View.GONE
-
         super.onResume()
         if (::codeScanner.isInitialized) {
             codeScanner.startPreview()
@@ -99,9 +95,7 @@ class QrScanActivity : AppCompatActivity() {
     }
 
     override fun onPause() {
-        if (::codeScanner.isInitialized) {
-            codeScanner.releaseResources()
-        }
+        codeScanner.releaseResources()
         super.onPause()
     }
 
