@@ -63,9 +63,11 @@ class MenuRecyclerAdapter(
         }
 
         holder.nextBtn.setOnClickListener {
+            viewModel.moveStart(menu.seatId)
+            viewModel.cancel(menu.seatId)
+
             val intent = Intent(activity, MoveActivity::class.java)
             val seatNum = menu.seatNum.toString()
-            viewModel.moveStart(menu.seatId)
             intent.putExtra("seatNum", seatNum)
             activity.startActivity(intent)
         }

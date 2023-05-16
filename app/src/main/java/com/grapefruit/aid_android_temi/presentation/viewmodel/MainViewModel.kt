@@ -71,4 +71,19 @@ class MainViewModel: ViewModel() {
             }
         }
     }
+
+    fun cancel(seatId: Long){
+        viewModelScope.launch {
+            val response = NetworkModule.cancel(seatId)
+
+            when(response.code()){
+                204 -> {
+                    Log.d("자리취소 성공", "${response.code()}")
+                }
+                409 -> {
+                    Log.d("자리 사용안하는중", "${response.code()}")
+                }
+            }
+        }
+    }
 }

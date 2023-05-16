@@ -5,6 +5,7 @@ import com.grapefruit.aid_android_temi.data.dto.PurchaseDTO
 import retrofit2.Response
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.PATCH
 import retrofit2.http.Path
 
 interface SeatApi {
@@ -22,4 +23,9 @@ interface SeatApi {
     suspend fun moveStart(
         @Path("seatId") seatId: Long
     ): Response<Void>
+
+    @PATCH("/seat/cancel/{seatId}")
+    suspend fun cancel(
+        @Path("seatId") seatId: Long
+    ): Response<Unit>
 }

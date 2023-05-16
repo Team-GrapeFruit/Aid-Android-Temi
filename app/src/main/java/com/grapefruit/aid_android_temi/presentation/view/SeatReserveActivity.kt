@@ -33,7 +33,9 @@ class SeatReserveActivity : AppCompatActivity() {
         robot.getInstance().setKioskModeOn(true)
         robot.getInstance().hideTopBar()
 
-        storeId = intent.getLongExtra("storeId", 0)
+        val sharedPreferences = getSharedPreferences("MyPreferences", MODE_PRIVATE)
+        val storeId = sharedPreferences.getLong("storeId", 0)
+
         viewModel.seatList(storeId)
 
         viewModel.seatListResponse.observe(this) {
@@ -46,7 +48,6 @@ class SeatReserveActivity : AppCompatActivity() {
 
         binding.menuText.setOnClickListener {
             val intent = Intent(this, MenuCheckActivity::class.java)
-            intent.putExtra("storeId", storeId)
             startActivity(intent)
             overridePendingTransition(0, 0)
         }

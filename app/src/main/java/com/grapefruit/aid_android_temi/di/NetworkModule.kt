@@ -38,4 +38,8 @@ object NetworkModule {
     suspend fun moveStart(seatId: Long): Response<Void> {
         return seatApi.moveStart(seatId)
     }
+
+    suspend fun cancel(seatId: Long): Response<Unit> {
+        return seatApi.cancel(seatId)
+    }
 }
