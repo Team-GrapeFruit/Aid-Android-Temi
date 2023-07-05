@@ -1,4 +1,4 @@
-package com.grapefruit.aid_android_temi.data.api
+package com.grapefruit.aid_android_temi.data.remote
 
 import com.grapefruit.aid_android_temi.data.dto.StoreDTO
 import retrofit2.Response

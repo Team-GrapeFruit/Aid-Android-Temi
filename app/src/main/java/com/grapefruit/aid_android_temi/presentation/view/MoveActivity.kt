@@ -9,7 +9,9 @@ import com.grapefruit.aid_android_temi.R
 import com.grapefruit.aid_android_temi.databinding.ActivityMoveBinding
 import com.robotemi.sdk.Robot
 import com.robotemi.sdk.listeners.OnGoToLocationStatusChangedListener
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MoveActivity : AppCompatActivity(), OnGoToLocationStatusChangedListener {
 
     lateinit var binding: ActivityMoveBinding

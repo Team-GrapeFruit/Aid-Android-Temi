@@ -1,89 +1,57 @@
 package com.grapefruit.aid_android_temi.presentation.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.grapefruit.aid_android_temi.data.dto.CheckSeatDTO
 import com.grapefruit.aid_android_temi.data.dto.PurchaseDTO
 import com.grapefruit.aid_android_temi.data.dto.StoreDTO
-import com.grapefruit.aid_android_temi.di.NetworkModule
+import com.grapefruit.aid_android_temi.domain.usecase.MainUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainViewModel: ViewModel() {
-    private var _storeInfo = MutableLiveData<StoreDTO>()
-    val storeInfo: LiveData<StoreDTO> get() = _storeInfo
+@HiltViewModel
+class MainViewModel @Inject constructor(
+    private val mainUseCase: MainUseCase
+) : ViewModel() {
+    private val _storeInfo = MutableStateFlow<StoreDTO?>(null)
+    val storeInfo: StateFlow<StoreDTO?> = _storeInfo
 
-    private val _seatListResponse = MutableLiveData<CheckSeatDTO>()
-    val seatListResponse: LiveData<CheckSeatDTO> get() = _seatListResponse
+    private val _seatListResponse = MutableStateFlow<CheckSeatDTO?>(null)
+    val seatListResponse: StateFlow<CheckSeatDTO?> = _seatListResponse
 
-    private val _menuListResponse = MutableLiveData<List<PurchaseDTO>>()
-    val menuListResponse: LiveData<List<PurchaseDTO>> get() = _menuListResponse
+    private val _menuListResponse = MutableStateFlow<List<PurchaseDTO>?>(null)
+    val menuListResponse: StateFlow<List<PurchaseDTO>?> = _menuListResponse
 
     fun storeLoad(storeId: Long) {
         viewModelScope.launch {
-            val response = NetworkModule.searchStore(storeId)
-            Log.d("qrResponse", response.code().toString())
-
-            if (response.code() == 200) {
-                _storeInfo.value = response.body()
-                Log.d("qr 인증 성공", "$response")
-            } else {
-                Log.d("qr 인증 실패", response.code().toString())
-            }
+            _storeInfo.value = mainUseCase.loadStore(storeId).firstOrNull()
         }
     }
+
     fun seatList(storeId: Long) {
         viewModelScope.launch {
-            val response = NetworkModule.seatList(storeId)
-            Log.d("seatResponse", response.code().toString())
-
-            if (response.code() == 200){
-                _seatListResponse.value = response.body()
-                Log.d("자리 가져오기 성공","$response")
-            } else {
-                Log.d("자리 가져오기 실패", response.code().toString())
-            }
+            _seatListResponse.value = mainUseCase.loadSeatList(storeId).firstOrNull()
         }
     }
 
     fun menuList(seatId: Long) {
         viewModelScope.launch {
-            val response = NetworkModule.menuList(seatId)
-            Log.d("menuResponse", response.code().toString())
-
-            if (response.code() == 200){
-                _menuListResponse.value = response.body()
-                Log.d("메뉴 가져오기 성공","$response")
-            } else {
-                Log.d("메뉴 가져오기 실패", response.code().toString())
-            }
+            _menuListResponse.value = mainUseCase.loadMenuList(seatId).firstOrNull()
         }
     }
 
     fun moveStart(seatId: Long) {
         viewModelScope.launch {
-            val response = NetworkModule.moveStart(seatId)
-            Log.d("deleteResponse", response.code().toString())
-
-            if (response.code() == 204){
-                Log.d("메뉴 삭제 성공","$response")
-            } else {
-                Log.d("메뉴 삭제 실패", response.code().toString())
-            }
+            mainUseCase.moveStart(seatId)
         }
     }
 
-    fun cancel(seatId: Long){
+    fun cancel(seatId: Long) {
         viewModelScope.launch {
-            val response = NetworkModule.cancel(seatId)
-
-            when(response.code()){
-                204 -> {
-                    Log.d("자리취소 성공", "${response.code()}")
-                }
-                409 -> {
-                    Log.d("자리 사용안하는중", "${response.code()}")
-                }
-            }
+            mainUseCase.cancel(seatId)
         }
     }
 }

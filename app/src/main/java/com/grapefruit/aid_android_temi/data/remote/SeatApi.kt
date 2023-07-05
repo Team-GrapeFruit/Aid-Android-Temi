@@ -1,4 +1,4 @@
-package com.grapefruit.aid_android_temi.data.api
+package com.grapefruit.aid_android_temi.data.remote
 
 import com.grapefruit.aid_android_temi.data.dto.CheckSeatDTO
 import com.grapefruit.aid_android_temi.data.dto.PurchaseDTO

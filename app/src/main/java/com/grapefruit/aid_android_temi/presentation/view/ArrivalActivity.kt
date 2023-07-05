@@ -7,7 +7,9 @@ import androidx.databinding.DataBindingUtil
 import com.grapefruit.aid_android_temi.R
 import com.grapefruit.aid_android_temi.databinding.ActivityArrivalBinding
 import com.robotemi.sdk.Robot
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ArrivalActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityArrivalBinding

@@ -14,7 +14,6 @@ class FoodRecyclerAdapter(
     val foodList: List<PurchaseDTO>,
     val inflater: LayoutInflater,
     val glide: RequestManager
-
 ) : RecyclerView.Adapter<FoodRecyclerAdapter.ViewHolder>() {
 
     inner class ViewHolder(val binding: RecyclerviewFoodItemBinding) : RecyclerView.ViewHolder(binding.root) {

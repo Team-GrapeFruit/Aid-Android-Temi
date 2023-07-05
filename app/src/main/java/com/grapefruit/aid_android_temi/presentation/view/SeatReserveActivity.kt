@@ -12,11 +12,18 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.grapefruit.aid_android_temi.R
 import com.grapefruit.aid_android_temi.databinding.ActivitySeatReserveBinding
 import com.grapefruit.aid_android_temi.presentation.viewmodel.MainViewModel
 import com.robotemi.sdk.Robot
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class SeatReserveActivity : AppCompatActivity() {
 
     lateinit var binding: ActivitySeatReserveBinding
@@ -38,12 +45,18 @@ class SeatReserveActivity : AppCompatActivity() {
 
         viewModel.seatList(storeId)
 
-        viewModel.seatListResponse.observe(this) {
-            with(binding) {
-                for (i in 0..it.singleSeatResponse.lastIndex) {
-                    table.addView(createTable(i))
+        lifecycleScope.launch {
+            viewModel.seatListResponse
+                .flowWithLifecycle(lifecycle, Lifecycle.State.RESUMED)
+                .collectLatest {
+                    binding.apply {
+                        if (it != null) {
+                            for (i in 0..it.singleSeatResponse.lastIndex) {
+                                table.addView(createTable(i))
+                            }
+                        }
+                    }
                 }
-            }
         }
 
         binding.menuText.setOnClickListener {
