@@ -8,12 +8,19 @@ import android.util.Log
 import android.view.*
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.grapefruit.aid_android_temi.R
 import com.grapefruit.aid_android_temi.databinding.DialogSeatReserveBinding
 import com.grapefruit.aid_android_temi.presentation.adapter.SeatRecyclerAdapter
 import com.grapefruit.aid_android_temi.presentation.viewmodel.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class SeatReserveDialog(
     private val context: SeatReserveActivity,
     private val seatNum: Long,
@@ -58,14 +65,19 @@ class SeatReserveDialog(
 
         viewModel.menuList(seatId)
 
-        viewModel.menuListResponse.observe(context) {
-            Log.d("menuList", "$it")
-            val menuRecyclerView = binding.menuRecycler
-            menuRecyclerView.adapter = SeatRecyclerAdapter(
-                it,
-                LayoutInflater.from(context),
-                Glide.with(context)
-            )
+        lifecycleScope.launch {
+            viewModel.menuListResponse
+                .flowWithLifecycle(lifecycle, Lifecycle.State.RESUMED)
+                .collectLatest {
+                    if (it != null) {
+                        val menuRecyclerView = binding.menuRecycler
+                        menuRecyclerView.adapter = SeatRecyclerAdapter(
+                            it,
+                            LayoutInflater.from(context),
+                            Glide.with(context)
+                        )
+                    }
+                }
         }
     }
 

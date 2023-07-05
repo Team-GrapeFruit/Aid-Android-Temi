@@ -6,12 +6,16 @@ import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
+import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.budiyev.android.codescanner.AutoFocusMode
 import com.budiyev.android.codescanner.CodeScanner
 import com.budiyev.android.codescanner.DecodeCallback
@@ -21,8 +25,11 @@ import com.grapefruit.aid_android_temi.R
 import com.grapefruit.aid_android_temi.databinding.ActivityQrScanBinding
 import com.grapefruit.aid_android_temi.presentation.viewmodel.MainViewModel
 import com.robotemi.sdk.Robot
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
-
+@AndroidEntryPoint
 class QrScanActivity : AppCompatActivity() {
     private lateinit var codeScanner: CodeScanner
     private lateinit var binding: ActivityQrScanBinding
@@ -43,20 +50,24 @@ class QrScanActivity : AppCompatActivity() {
         robot.setKioskModeOn(true)
         robot.hideTopBar()
 
-        viewModel.storeInfo.observe(this) {
+        lifecycleScope.launch {
+            viewModel.storeInfo
+                .flowWithLifecycle(lifecycle, Lifecycle.State.RESUMED)
+                .collectLatest {
+                    val storeId = viewModel.storeInfo.value?.storeId
+                    if (storeId != null) {
+                        val editor = sharedPreferences.edit()
+                        editor.putLong("storeId", storeId)
+                        editor.apply()
 
-            val storeId = viewModel.storeInfo.value?.storeId
-            if (storeId != null) {
-                val editor = sharedPreferences.edit()
-                editor.putLong("storeId", storeId)
-                editor.apply()
-            }
-
-            binding.qrBtn.visibility = VISIBLE
-            binding.qrBtn.setOnClickListener {
-                val intent = Intent(this, SeatReserveActivity::class.java)
-                startActivity(intent)
-            }
+                        binding.qrBtn.visibility = VISIBLE
+                        binding.qrBtn.setOnClickListener {
+                            startActivity(Intent(this@QrScanActivity, SeatReserveActivity::class.java))
+                        }
+                    } else {
+                        binding.qrBtn.visibility = GONE
+                    }
+                }
         }
     }
 

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.grapefruit.aid_android_temi.R
@@ -14,6 +15,7 @@ import com.grapefruit.aid_android_temi.databinding.RecyclerviewMenuItemBinding
 import com.grapefruit.aid_android_temi.presentation.view.MenuCheckActivity
 import com.grapefruit.aid_android_temi.presentation.view.MoveActivity
 import com.grapefruit.aid_android_temi.presentation.viewmodel.MainViewModel
+import kotlinx.coroutines.launch
 
 class MenuRecyclerAdapter(
     val menuList: CheckSeatDTO,
@@ -21,10 +23,10 @@ class MenuRecyclerAdapter(
     val viewModel: MainViewModel,
     val activity: MenuCheckActivity,
     val glide: RequestManager
-
 ) : RecyclerView.Adapter<MenuRecyclerAdapter.ViewHolder>() {
 
-    inner class ViewHolder(val binding: RecyclerviewMenuItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(val binding: RecyclerviewMenuItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         val number: TextView
         val foodRecycler: RecyclerView
         val nextBtn: Button
@@ -33,6 +35,19 @@ class MenuRecyclerAdapter(
             number = binding.number
             foodRecycler = binding.foodRecycler
             nextBtn = binding.nextBtn
+        }
+
+        fun bind(seatId: Long) {
+            viewModel.menuList(seatId)
+            activity.lifecycleScope.launch {
+                viewModel.menuListResponse.collect { menuList ->
+                    if (menuList != null) {
+                        val foodRecyclerAdapter =
+                            FoodRecyclerAdapter(menuList, LayoutInflater.from(activity), glide)
+                        foodRecycler.adapter = foodRecyclerAdapter
+                    }
+                }
+            }
         }
     }
 
@@ -50,17 +65,7 @@ class MenuRecyclerAdapter(
 
         holder.number.text = menu.seatNum.toString() + "번"
 
-        viewModel.menuList(menu.seatId)
-
-        viewModel.menuListResponse.observe(activity) {
-            Log.d("menuList", "$it")
-            val foodRecycler = holder.foodRecycler
-            foodRecycler.adapter = FoodRecyclerAdapter(
-                it,
-                LayoutInflater.from(activity),
-                glide
-            )
-        }
+        holder.bind(menu.seatId)
 
         holder.nextBtn.setOnClickListener {
             viewModel.moveStart(menu.seatId)
