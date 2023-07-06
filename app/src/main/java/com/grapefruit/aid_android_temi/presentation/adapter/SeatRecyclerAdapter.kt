@@ -4,24 +4,23 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
-import com.grapefruit.aid_android_temi.R
 import com.grapefruit.aid_android_temi.databinding.RecyclerviewSeatItemBinding
 import com.grapefruit.aid_android_temi.data.dto.PurchaseDTO
 
 class SeatRecyclerAdapter(
-    val menuList: List<PurchaseDTO>,
-    val inflater: LayoutInflater,
-    val glide: RequestManager
+    private val glide: RequestManager
+) : ListAdapter<PurchaseDTO, SeatRecyclerAdapter.ViewHolder>(DiffCallback<PurchaseDTO>()) {
 
-    ) : RecyclerView.Adapter<SeatRecyclerAdapter.ViewHolder>() {
+    inner class ViewHolder(private val binding: RecyclerviewSeatItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-    inner class ViewHolder(val binding: RecyclerviewSeatItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        val menuImg: ImageView
-        val menuName: TextView
-        val menuPrice: TextView
-        val menuNumber: TextView
+        private val menuImg: ImageView
+        private val menuName: TextView
+        private val menuPrice: TextView
+        private val menuNumber: TextView
 
         init {
             menuImg = binding.menuImg
@@ -29,28 +28,23 @@ class SeatRecyclerAdapter(
             menuPrice = binding.menuPrice
             menuNumber = binding.menuNumber
         }
+
+        fun bind(purchase: PurchaseDTO) {
+            glide.load(purchase.purchaseMenu.menuImgUrl).centerCrop().into(menuImg)
+            menuName.text = purchase.purchaseMenu.menuName
+            menuPrice.text = purchase.purchaseMenu.cost.toString() + "원"
+            menuNumber.text = purchase.quantity.toString() + "개"
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = inflater.inflate(R.layout.recyclerview_seat_item, parent, false)
-        return ViewHolder(RecyclerviewSeatItemBinding.bind(view))
-    }
-
-    override fun getItemCount(): Int {
-        return menuList.size
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = RecyclerviewSeatItemBinding.inflate(inflater, parent, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val menu = menuList[position]
-
-        menu.purchaseMenu.menuImgUrl.let {
-            glide.load(it).centerCrop().into(holder.menuImg)
-        }
-
-        holder.menuName.text = menu.purchaseMenu.menuName
-
-        holder.menuPrice.text = menu.purchaseMenu.cost.toString() + "원"
-
-        holder.menuNumber.text = menu.quantity.toString() + "개"
+        val purchase = getItem(position)
+        holder.bind(purchase)
     }
 }

@@ -93,7 +93,9 @@ class QrScanActivity : AppCompatActivity() {
             decodeCallback = DecodeCallback {
                 runOnUiThread {
                     val barcodeValue = it.text
-                    viewModel.storeLoad(barcodeValue.toLong())
+                    if (barcodeValue.isNotBlank()) {
+                        viewModel.storeLoad(barcodeValue.toLong())
+                    }
                 }
             }
 

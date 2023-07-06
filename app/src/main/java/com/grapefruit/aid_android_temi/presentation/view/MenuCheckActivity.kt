@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.grapefruit.aid_android_temi.R
+import com.grapefruit.aid_android_temi.data.dto.CheckSeatDTO
 import com.grapefruit.aid_android_temi.databinding.ActivityMenuCheckBinding
 import com.grapefruit.aid_android_temi.presentation.adapter.MenuRecyclerAdapter
 import com.grapefruit.aid_android_temi.presentation.viewmodel.MainViewModel
@@ -47,21 +48,22 @@ class MenuCheckActivity : AppCompatActivity() {
         lifecycleScope.launch {
             viewModel.seatListResponse
                 .flowWithLifecycle(lifecycle, Lifecycle.State.RESUMED)
-                .collectLatest {
-                    if (it != null) {
+                .collectLatest { seatList ->
+                    if (seatList != null) {
                         val pager = binding.pager
                         val tabLayout = binding.tabLayout
-                        val lastPosition = it.singleSeatResponse.lastIndex
-                        val seatList = it
+                        val lastPosition = seatList.singleSeatResponse.lastIndex
 
-                        pager.adapter = MenuRecyclerAdapter(
-                            it,
+                        val adapter = MenuRecyclerAdapter(
                             LayoutInflater.from(this@MenuCheckActivity),
                             viewModel,
                             this@MenuCheckActivity,
                             Glide.with(this@MenuCheckActivity)
                         )
 
+                        adapter.submitList(seatList.singleSeatResponse)
+
+                        pager.adapter = adapter
                         pager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
 
                         pager.registerOnPageChangeCallback(object :
