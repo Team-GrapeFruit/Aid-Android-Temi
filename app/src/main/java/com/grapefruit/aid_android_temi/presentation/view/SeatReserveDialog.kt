@@ -68,14 +68,15 @@ class SeatReserveDialog(
         lifecycleScope.launch {
             viewModel.menuListResponse
                 .flowWithLifecycle(lifecycle, Lifecycle.State.RESUMED)
-                .collectLatest {
-                    if (it != null) {
-                        val menuRecyclerView = binding.menuRecycler
-                        menuRecyclerView.adapter = SeatRecyclerAdapter(
-                            it,
-                            LayoutInflater.from(context),
+                .collectLatest { menuList ->
+                    if (menuList != null) {
+                        val adapter = SeatRecyclerAdapter(
                             Glide.with(context)
                         )
+                        adapter.submitList(menuList)
+
+                        val menuRecyclerView = binding.menuRecycler
+                        menuRecyclerView.adapter = adapter
                     }
                 }
         }

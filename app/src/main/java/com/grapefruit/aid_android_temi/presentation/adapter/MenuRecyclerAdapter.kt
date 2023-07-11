@@ -1,12 +1,12 @@
 package com.grapefruit.aid_android_temi.presentation.adapter
 
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.grapefruit.aid_android_temi.R
@@ -18,12 +18,11 @@ import com.grapefruit.aid_android_temi.presentation.viewmodel.MainViewModel
 import kotlinx.coroutines.launch
 
 class MenuRecyclerAdapter(
-    val menuList: CheckSeatDTO,
     val inflater: LayoutInflater,
     val viewModel: MainViewModel,
     val activity: MenuCheckActivity,
     val glide: RequestManager
-) : RecyclerView.Adapter<MenuRecyclerAdapter.ViewHolder>() {
+) : ListAdapter<CheckSeatDTO.SeatDTO, MenuRecyclerAdapter.ViewHolder>(DiffCallback<CheckSeatDTO.SeatDTO>()) {
 
     inner class ViewHolder(val binding: RecyclerviewMenuItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -43,7 +42,8 @@ class MenuRecyclerAdapter(
                 viewModel.menuListResponse.collect { menuList ->
                     if (menuList != null) {
                         val foodRecyclerAdapter =
-                            FoodRecyclerAdapter(menuList, LayoutInflater.from(activity), glide)
+                            FoodRecyclerAdapter(glide)
+                        foodRecyclerAdapter.submitList(menuList)
                         foodRecycler.adapter = foodRecyclerAdapter
                     }
                 }
@@ -57,11 +57,11 @@ class MenuRecyclerAdapter(
     }
 
     override fun getItemCount(): Int {
-        return menuList.singleSeatResponse.size
+        return currentList.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val menu = menuList.singleSeatResponse[position]
+        val menu = getItem(position)
 
         holder.number.text = menu.seatNum.toString() + "번"
 
@@ -78,3 +78,5 @@ class MenuRecyclerAdapter(
         }
     }
 }
+
+
