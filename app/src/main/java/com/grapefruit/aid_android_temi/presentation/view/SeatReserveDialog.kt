@@ -39,6 +39,7 @@ class SeatReserveDialog(
         _binding = DialogSeatReserveBinding.inflate(inflater, container, false)
         val view = binding.root
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog?.window?.setLayout(435, 508)
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         dialog?.setCancelable(true)
 
