@@ -22,7 +22,7 @@ interface SeatApi {
     @DELETE("/purchase/{seatId}")
     suspend fun moveStart(
         @Path("seatId") seatId: Long
-    ): Response<Void>
+    ): Response<Unit>
 
     @PATCH("/seat/cancel/{seatId}")
     suspend fun cancel(

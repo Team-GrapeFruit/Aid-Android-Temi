@@ -13,20 +13,15 @@ import dagger.hilt.android.AndroidEntryPoint
 class ArrivalActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityArrivalBinding
-    private val robot = Robot
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        robot.getInstance().setKioskModeOn(true)
-        robot.getInstance().hideTopBar()
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_arrival)
 
         binding.homeBtn.setOnClickListener {
             val intent = Intent(this, MoveActivity::class.java)
             intent.putExtra("seatNum", "홈베이스")
-            robot.getInstance().goTo("홈베이스")
             startActivity(intent)
         }
     }

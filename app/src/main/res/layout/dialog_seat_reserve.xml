@@ -6,10 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="435dp"
         android:layout_height="508dp"
-        android:layout_gravity="center"
-        android:background="@drawable/dialog_background"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:background="@drawable/dialog_background">
 
         <!-- 번호 -->
         <TextView
@@ -39,12 +36,14 @@
         <!-- 메뉴 리스트 -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/menu_recycler"
-            android:layout_width="match_parent"
+            android:layout_width="435dp"
             android:layout_height="350dp"
             android:layout_marginTop="10dp"
             android:overScrollMode="never"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/recyclerview_seat_item"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/next_btn"
             app:layout_constraintTop_toBottomOf="@id/number" />
 

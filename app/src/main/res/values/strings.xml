@@ -12,4 +12,5 @@
     <string name="go_homebase">홈베이스로 이동중 잠시 비켜주세요!</string>
     <string name="table_number">%1$s번</string>
     <string name="go_table">%1$s번 자리로 이동중 잠시 비켜주세요!</string>
+    <string name="dot">.</string>
 </resources>
