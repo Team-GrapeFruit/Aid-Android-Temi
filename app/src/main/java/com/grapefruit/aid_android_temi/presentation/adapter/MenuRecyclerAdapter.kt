@@ -15,6 +15,7 @@ import com.grapefruit.aid_android_temi.databinding.RecyclerviewMenuItemBinding
 import com.grapefruit.aid_android_temi.presentation.view.MenuCheckActivity
 import com.grapefruit.aid_android_temi.presentation.view.MoveActivity
 import com.grapefruit.aid_android_temi.presentation.viewmodel.MainViewModel
+import com.grapefruit.aid_android_temi.util.SetItemUtil
 import kotlinx.coroutines.launch
 
 class MenuRecyclerAdapter(
@@ -63,7 +64,7 @@ class MenuRecyclerAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val menu = getItem(position)
 
-        holder.number.text = menu.seatNum.toString() + "번"
+        holder.number.text = SetItemUtil.setSeatNum(menu.seatNum)
 
         holder.bind(menu.seatId)
 
