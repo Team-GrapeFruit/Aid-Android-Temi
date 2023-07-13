@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.grapefruit.aid_android_temi.databinding.RecyclerviewSeatItemBinding
 import com.grapefruit.aid_android_temi.data.dto.PurchaseDTO
+import com.grapefruit.aid_android_temi.util.SetItemUtil
 
 class SeatRecyclerAdapter(
     private val glide: RequestManager
@@ -32,8 +33,8 @@ class SeatRecyclerAdapter(
         fun bind(purchase: PurchaseDTO) {
             glide.load(purchase.purchaseMenu.menuImgUrl).centerCrop().into(menuImg)
             menuName.text = purchase.purchaseMenu.menuName
-            menuPrice.text = purchase.purchaseMenu.cost.toString() + "원"
-            menuNumber.text = purchase.quantity.toString() + "개"
+            menuPrice.text = SetItemUtil.setCost(purchase.purchaseMenu.cost)
+            menuNumber.text = SetItemUtil.setQuantity(purchase.quantity)
         }
     }
 
